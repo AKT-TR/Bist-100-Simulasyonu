@@ -1,0 +1,39 @@
+Sub KarZararGrafikModern()
+    Dim ws As Worksheet
+    Set ws = Sheets("Kullanıcı Ekranı") ' Veya istediğin sayfa
+
+    ' Önceki grafik varsa sil
+    On Error Resume Next
+    ws.ChartObjects("KarZararGrafik").Delete
+    On Error GoTo 0
+
+    Dim grafik As ChartObject
+    Set grafik = ws.ChartObjects.Add(Left:=100, Top:=50, Width:=600, Height:=350)
+    grafik.Name = "KarZararGrafik"
+
+    With grafik.Chart
+        .ChartType = xlColumnClustered
+        .SetSourceData Source:=Sheets("Portföy").Range("A7:A20,G7:G20") ' Kendi verine göre ayarla
+        .HasTitle = True
+        .ChartTitle.Text = "Kar/Zarar (%) - Hisse Bazlı"
+
+        ' Arka plan
+        .ChartArea.Format.Fill.ForeColor.RGB = RGB(30, 30, 30)
+        .PlotArea.Format.Fill.ForeColor.RGB = RGB(30, 30, 30)
+
+        ' Yazılar beyaz
+        .ChartTitle.Format.TextFrame2.TextRange.Font.Fill.ForeColor.RGB = RGB(255, 255, 255)
+        .Axes(xlCategory).TickLabels.Font.Color = RGB(255, 255, 255)
+        .Axes(xlValue).TickLabels.Font.Color = RGB(255, 255, 255)
+        
+        ' Seriyi şeffaf yap ve kenar çerçevesi ver
+        With .SeriesCollection(1)
+            .Format.Fill.Visible = msoFalse
+            .Format.Line.Visible = msoTrue
+            .Format.Line.ForeColor.RGB = RGB(0, 153, 255)
+            .Format.Line.Weight = 1.5
+        End With
+    End With
+End Sub
+
+

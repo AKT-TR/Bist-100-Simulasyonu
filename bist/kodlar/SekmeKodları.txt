@@ -1,0 +1,17 @@
+Sub Git_Portfoy()
+    Sheets("Portföy").Activate
+End Sub
+Sub Git_Alislar()
+    Sheets("Gecmis").Activate
+End Sub
+Sub Git_Satislar()
+    Sheets("Satışlar").Activate
+End Sub
+
+Sub git_borsa()
+Sheets("BİST100").Activate
+End Sub
+
+Sub git_anasayfa()
+Sheets("Kullanıcı Ekranı").Activate
+End Sub

@@ -1,0 +1,36 @@
+Private Sub Workbook_Open()
+
+    ' Ana sayfayı aktif yap
+    Sheets("Kullanıcı Ekranı").Activate
+    
+    ' Excel'i tam ekran yap
+    With Application
+        .DisplayFormulaBar = False
+        .DisplayStatusBar = False
+        .ExecuteExcel4Macro "SHOW.TOOLBAR(""Ribbon"", False)"
+        .WindowState = xlMaximized
+    End With
+
+    ' Sayfa sekmelerini ve başlıkları gizle
+    With ActiveWindow
+        .DisplayHeadings = False
+        .DisplayWorkbookTabs = False
+    End With
+
+
+    'frmYatirim.Show'
+    Call PortfoyYukle
+    Call TumGuncelleme
+    Call GuncelFiyatGuncelle
+    Application.OnTime Now + TimeValue("00:01:00"), "GuncelFiyatGuncelle"
+    Call TumGuncelleme
+    Application.OnTime Now + TimeValue("00:01:00"), "TumGuncelleme"
+    
+    End Sub
+ 
+    
+
+Private Sub Workbook_BeforeClose(Cancel As Boolean)
+    Call PortfoyKaydet
+End Sub
+
